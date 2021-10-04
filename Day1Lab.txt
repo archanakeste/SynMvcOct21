@@ -1,3 +1,22 @@
+Lab 3 - Annoatation based
+  copy day1.demo2 to day1.demo3
+   delete demo1.xml and modify
+   Application.java to 
+    @ComponentScan(basePackages = "demo")
+    @Configuration
+    public class Application {
+
+      public static void main(String[] args) {
+        // TODO Auto-generated method stub
+      //	ApplicationContext ctx = new ClassPathXmlApplicationContext("demo1.xml");
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(Application.class);
+
+  Run test
+  
+  Create interface Connection -> void open, void close
+  Create two classes OracleImpl and SQLImpl to implement Connection interface
+  Create instance of OracleImpl / SQLImpl using getbean and run open and close methods
+--------------------
 Lab 2 - XML + Annotations
   copy of same earlier project as Day1.demo2
     1. Change demo1.xml
