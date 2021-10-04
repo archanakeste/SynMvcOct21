@@ -1,3 +1,72 @@
+Lab 6 - 
+	Db Setup => Download HSQLDB 2.6.0
+	extract and run (jdk/bin in path)
+		bin\runServer
+		bin\runManagerSwing
+		-> for version error -> ren lib\hsqldb8.jar -> hsqldb.jar 
+	
+	new maven project Day1.demo5
+	POM -> 	<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>5.2.17.RELEASE</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>5.2.17.RELEASE</version>
+		</dependency>
+		add external jar in classpath => hsqldb\lib\hsqldb.jar
+	
+	create demo.Dept.java
+	      package demo;
+
+	      public class Dept {
+		private int deptno;
+		private String dname;
+		private String loc;
+		
+		+ get/set + toString + constructors
+	
+	Create DeptDAO.java
+		package demo;
+
+		@Component(value = "deptdao")
+		public class DeptDAO {
+			@Autowired
+			private DataSource ds;
+			public void insert(Dept d) {
+				JdbcTemplate template = new JdbcTemplate(ds);
+				// create table dept  (deptno  integer  primary key, dname varchar(20), loc varchar(20))
+
+				String sql  = "insert into dept values (" + d.getDeptno() + ", '" + d.getDname() + "','" + d.getLoc() + "')";
+
+				System.out.println("in insert of DeptDAO with " + sql);
+				System.out.println(template);
+				template.execute(sql);
+			}
+		}
+	Create JdbcApplication.java
+		@Configuration
+		@ComponentScan(basePackages = "demo")
+		public class JDBCApplication {
+		@Bean
+		public DataSource ds() {
+			DriverManagerDataSource ds = new DriverManagerDataSource();
+			ds.setDriverClassName("org.hsqldb.jdbc.JDBCDriver");
+			ds.setUrl("jdbc:hsqldb:hsql://localhost/");
+			ds.setUsername("SA");
+			ds.setPassword(null);
+			return ds;
+
+		}
+	Write main method to test insert from DeptDAO
+	C - execute
+	R - Query -  list of records -> public List<Dept> read()
+	U - execute  public void update(int deptno, String newdname, String newloc)
+	D - execute  public void delete(int deptno)
+--------------------------
 Lab 5- Day1.demo4
 	Copy SQLConnection in demo1
 	Run -> error -> two beans satisfying the condition instead of 1
