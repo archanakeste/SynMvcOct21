@@ -1,3 +1,90 @@
+Lab 4 - Day1.demo4
+    Create a package demo, demo1
+    demo.Simple
+        package demo;
+
+        public class Simple {
+
+          public Simple() {
+            System.out.println("Simple Constructor ");
+          }
+          public void m1() {
+            System.out.println("m1 invoked ...");
+          }
+        }
+   Application.java
+        @Configuration
+        public class Application {
+          @Bean()
+          @Scope(value = "prototype")
+          public Simple simple()
+          {
+            System.out.println("in getsimple of Application");
+            return new Simple();
+          }
+          public static void main(String[] args) {
+              ApplicationContext ctx = new AnnotationConfigApplicationContext(Application.class);
+              System.out.println("---------------------Context Loaded-----------------------");
+              String[] arr = ctx.getBeanDefinitionNames();
+              for (String string : arr) {
+                System.out.println(string);
+              }
+              System.out.println("-----------------------------");
+            Simple s1 = ctx.getBean("simple", Simple.class);
+              s1.m1();
+              Simple s2 = ctx.getBean("simple", Simple.class);
+              s2.m1();
+          }
+      }
+  RUn -> check beans which get created,  modify/playwith @bean, @Scope annoations for simple 
+  
+  Create Simple1.java
+       package demo;
+        @Component
+        public class Simple1 {
+
+          public Simple1() {
+            System.out.println("Simple1 Constructor ");
+          }
+          public void m1() {
+            System.out.println("m1 invoked of Simple1 ...");
+          }
+        }
+  Modify application.java to include
+      Simple1 s11 = ctx.getBean("simple1", Simple1.class);
+			s11.m1();  
+  run -> error
+  Add componentscan annoation to application.java
+  
+  Create demo1 package with Connection, OracleConnection with @component
+  
+  Create DeptDAO
+      package demo1;
+
+      @Component(value="deptdao")
+      public class DeptDAO {
+        @Autowired
+        private Connection con;
+
+        public void insert() {
+          getCon().open();
+          System.out.println("in insert of DeptDAO");
+          getCon().close();
+        }
+
+        public Connection getCon() {
+          return con;
+        }
+
+        public void setCon(Connection con) {
+          this.con = con;
+        }
+      }
+
+ Modify application to getDeptdao bean and invoke insert method
+ delete autowired annoation and check errors 
+ 
+--------------------
 Lab 3 - Annoatation based
   copy day1.demo2 to day1.demo3
    delete demo1.xml and modify
