@@ -1,4 +1,27 @@
-Lab 1 - Eclipse
+Lab 2 - XML + Annotations
+  copy of same earlier project as Day1.demo2
+    1. Change demo1.xml
+      <?xml version="1.0" encoding="UTF-8"?>
+      <beans xmlns="http://www.springframework.org/schema/beans"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:context="http://www.springframework.org/schema/context"
+          xsi:schemaLocation="http://www.springframework.org/schema/beans
+              https://www.springframework.org/schema/beans/spring-beans.xsd
+              http://www.springframework.org/schema/context
+              https://www.springframework.org/schema/context/spring-context.xsd">
+
+              <context:component-scan base-package="demo"></context:component-scan>
+      </beans>
+ 2. Modify Simple.java
+  @Component
+  //@Scope(value = "singleton")
+  @Scope(value = "prototype")
+  public class Simple {
+
+Test application using sinleton / prototype
+
+-----------------------
+Lab 1 - XML Based (Day1.demo1)
   Create a new maven project
   Modify pom file to include 
     	<dependencies>
