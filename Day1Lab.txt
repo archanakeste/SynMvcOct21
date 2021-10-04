@@ -1,0 +1,51 @@
+Lab 1 - Eclipse
+  Create a new maven project
+  Modify pom file to include 
+    	<dependencies>
+      <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>5.2.17.RELEASE</version>
+      </dependency>
+    </dependencies>
+Create demo1.xml in resouces folder
+  <?xml version="1.0" encoding="UTF-8"?>
+  <beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/beans
+          https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="simple" class="demo.Simple" />
+  </beans>
+Create Simple.java
+  package demo;
+
+  public class Simple {
+
+    public Simple() {
+      System.out.println("Simple Constructor ");
+    }
+    public void m1() {
+      System.out.println("m1 invoked ...");
+    }
+  }
+Create Application.java
+  package demo;
+  public class Application {
+
+    public static void main(String[] args) {
+      // TODO Auto-generated method stub
+      ApplicationContext ctx = new ClassPathXmlApplicationContext("demo1.xml");
+      System.out.println("----------------Context Loaded---------------------");
+      //Simple s1 =new Simple();
+      Simple s1 = ctx.getBean("simple",Simple.class);
+      s1.m1();
+    }
+
+  }
+
+Run -> Application
+    Observe where simple constructor is invoked,
+    create multiple instances of Simple and invoke m1 method and check only single instance of Simple is created
+    
+   
